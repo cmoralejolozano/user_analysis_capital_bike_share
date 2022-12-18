@@ -11,6 +11,7 @@ from streamlit_folium import st_folium
 import folium
 import geopandas as gpd
 import requests
+import zipfile
 import streamlit as st
 from PIL import Image
 
@@ -21,7 +22,14 @@ st.set_page_config(page_title="Capital Bike Share análisis de usuarios", layout
 #---------------------------------------------- COSAS QUE PODEMOS USAR EN TODA NUESTRA APP----------------------------------------------------------------------
 # Leemos todos los archivos en una línea
 df_hourly = pd.read_csv('cbs_hourly.csv')
-cbs= pd.read_csv('cbs_from_2016_to_10-2022.csv')
+cbs_1 = pd.read_csv('cbs_individual_records_1_seventh.zip',compression='zip')
+cbs_2 = pd.read_csv('cbs_individual_records_2_seventh.zip',compression='zip')
+cbs_3 = pd.read_csv('cbs_individual_records_3_seventh.zip',compression='zip')
+cbs_4 = pd.read_csv('cbs_individual_records_4_seventh.zip',compression='zip')
+cbs_5 = pd.read_csv('cbs_individual_records_5_seventh.zip',compression='zip')
+cbs_6 = pd.read_csv('cbs_individual_records_6_seventh.zip',compression='zip')
+cbs_7 = pd.read_csv('cbs_individual_records_7_seventh.zip',compression='zip')
+cbs = pd.concat([cbs_1, cbs_2, cbs_3, cbs_4, cbs_5, cbs_6, cbs_7])
 
 # Agrupo por estación y año, lo que me da la cuenta de usuarios por año
 anual_users_station = pd.DataFrame(cbs.groupby(['Start station', 'year']).size().unstack(fill_value=0).reset_index().values,
